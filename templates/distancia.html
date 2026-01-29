@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+{% import "_macros.html" as macros %}
+
+<form action="/distancia" method="post">
+
+    {{macros.datos("x1","Ingrese el primer numero","number")}}
+    {{macros.datos("y1","Ingrese el primer numero","number")}}
+    {{macros.datos("x2","Ingrese el primer numero","number")}}
+    {{macros.datos("y2","Ingrese el primer numero","number")}}
+
+    <button type="submit" class="btn btn-primary">Calcular</button>
+</form>
+
+<h1>
+    el resultado de la raiz {{ n1 }} + {{ n2 }} = {{ "%.2f"|format(res)}}
+</h1>
+
+{% endblock %}
+
+##Distacia commit
