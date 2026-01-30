@@ -1,8 +1,8 @@
-{% macro datos(name,placeholder,type="texto") %}
+{% macro datos(name,placeholder,type="texto", value="") %}
     <div class="mb-3">
         <label for="{{ name }}" class="form-label>">{{ name }}</label>
         <input type="{{ type }}" class="form-control" id="{{ name }}" name="{{ name }}"
-        placeholder="{{ placeholder }}">
+        placeholder="{{ placeholder }}", value="{{ value }}">
     </div>
 
 {% endmacro %}

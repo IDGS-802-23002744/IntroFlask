@@ -49,6 +49,12 @@
                                 class="nav-link {% if request.endpoint == 'alumnos' %}active{% endif %}"
                                 href>Alumnos</a>
                         </li>
+                        
+                        <li class="nav-item">
+                            <a
+                                class="nav-link {% if request.endpoint == 'cinepolis' %}active{% endif %}"
+                                href>cinepolis</a>
+                        </li>
 
                     </ul>
                 </div>
@@ -58,9 +64,9 @@
 
             {% with messages =get_flashed_messages() %}
                 {% if messages %}
-                    {% for messages in messages %}
+                    {% for message in messages %}
                         <div class="alert alert-success">
-                            {{ messages }}
+                            {{ message }}
                         </div>
                     {% endfor%}
                 {% endif %}

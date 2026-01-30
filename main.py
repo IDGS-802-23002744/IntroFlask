@@ -1,5 +1,6 @@
 from flask import Flask, render_template,request
 from flask_wtf.csrf import CSRFProtect
+from flask import flash
 
 import forms
 import math
@@ -30,8 +31,8 @@ def usuarios():
         ama=usuarios_class.amaterno.data
         email=usuarios_class.correo.data
 
-        message='Bienvenido{}'.format(nom)
-        flash(message)
+        mensaje='Bienvenido {}'.format(nom)
+        flash(mensaje)
     
     return render_template("usuarios.html",form=usuarios_class
                             ,mat=mat,nom=nom,apa=apa,ama=ama,email=email
@@ -149,6 +150,51 @@ def distancia():
 
             res = math.sqrt(n1 + n2)
     return render_template("distancia.html", res=res, x1=x1, y1=y1, x2=x2, y2=y2, n1=n1, n2=n2)
+
+####################################################
+# cinepolis #
+
+@app.route('/cinepolis', methods=['GET', 'POST'])
+def cinepolis():
+    total = ""
+    mensaje = ""
+    nombrec = ""
+    compradores = ""
+    boletas = ""
+
+    cinepolis_class=forms.UserCinepolis(request.form)
+    if request.method =='POST' and cinepolis_class.validate():
+        nombrec=cinepolis_class.nombrec.data
+        compradores=cinepolis_class.compradores.data
+        boletas=cinepolis_class.boletas.data
+
+        cineco = request.form.get('cineco')
+
+        precio_boleta = 12.00
+        max_boletas = compradores * 7
+
+        if boletas <= 0:
+            mensaje = "Ingresa cuántas boletas deseas comprar"
+        elif boletas > max_boletas:
+            mensaje = f"El maximo de boletos por comprador es de 7)"
+        else:
+            subtotal = boletas * precio_boleta
+
+            if boletas > 5:
+                subtotal *= 0.85
+            elif boletas >= 3:
+                subtotal *= 0.90
+
+            if cineco == 'si':
+                subtotal *= 0.90
+
+            total = f"${subtotal:,.2f}"
+
+    return render_template('cinepolis.html',form=cinepolis_class,total=total,mensaje=mensaje,nombrec=nombrec)
+
+
+####################################################
+
 
 if __name__ == '__main__':
     csrf.init_app(app)
