@@ -158,25 +158,20 @@ def distancia():
 def cinepolis():
     total = ""
     mensaje = ""
-    nombrec = ""
-    compradores = ""
-    boletas = ""
 
-    cinepolis_class=forms.UserCinepolis(request.form)
-    if request.method =='POST' and cinepolis_class.validate():
-        nombrec=cinepolis_class.nombrec.data
-        compradores=cinepolis_class.compradores.data
-        boletas=cinepolis_class.boletas.data
+    cinepolis_class = forms.UserCinepolis(request.form)
 
-        cineco = request.form.get('cineco')
+    if request.method == 'POST' and cinepolis_class.validate():
+        nombrec = cinepolis_class.nombrec.data
+        compradores = cinepolis_class.compradores.data
+        boletas = cinepolis_class.boletas.data
+        cineco = cinepolis_class.cineco.data
 
         precio_boleta = 12.00
         max_boletas = compradores * 7
 
-        if boletas <= 0:
-            mensaje = "Ingresa cuántas boletas deseas comprar"
-        elif boletas > max_boletas:
-            mensaje = f"El maximo de boletos por comprador es de 7)"
+        if boletas > max_boletas:
+            mensaje = "El máximo de boletos por comprador es de 7"
         else:
             subtotal = boletas * precio_boleta
 
@@ -190,7 +185,13 @@ def cinepolis():
 
             total = f"${subtotal:,.2f}"
 
-    return render_template('cinepolis.html',form=cinepolis_class,total=total,mensaje=mensaje,nombrec=nombrec)
+    return render_template(
+        'cinepolis.html',
+        form=cinepolis_class,
+        total=total,
+        mensaje=mensaje
+    )
+
 
 
 ####################################################

@@ -1,5 +1,5 @@
 from wtforms import Form
-from wtforms import StringField, IntegerField, PasswordField
+from wtforms import StringField, IntegerField, PasswordField, RadioField
 from wtforms import EmailField, validators
 
 class UserForm(Form):
@@ -37,4 +37,10 @@ class UserCinepolis(Form):
         validators.DataRequired(message="El campo es requerido"),
         validators.NumberRange(min=1, max=1000, message="Ingrese un valor válido")
     ])
+
+    cineco = RadioField( 
+        '¿Paga con tarjeta Cineco?',
+        choices=[('si', 'Sí'), ('no', 'No')],
+        validators=[validators.DataRequired(message="Selecciona una opción")]
+    )
 

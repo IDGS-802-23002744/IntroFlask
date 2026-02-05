@@ -1,49 +1,74 @@
 {% extends "layout.html" %}
-
 {% block content %}
-
 {% import "_macros.html" as macros %}
 
-<form action="/cinepolis" method="post">
+<form action="/cinepolis" method="post" style="background-color: #004182; padding: 20px; border-radius: 5px;">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
-    <div class="mb-3">
-        {{macros.campoNuevo(form.nombrec,class="form-control")}}
-    </div>
+    <div class="text-center mb-4">
+        <h1 style="color: #f5b301;">Cinepolis</h1>
 
-    <div class="mb-3">
-        {{macros.campoNuevo(form.compradores,class="form-control")}}
-    </div>
+    <div class="container mt-4">
 
-    <div class="mb-3">
-        {{macros.campoNuevo(form.boletas,class="form-control")}}
-    </div>
-    
-    <label>¿Paga con tarjeta Cineco?</label>
-    <div class="form-check">
-        <input class="form-check-input" type="radio" name="cineco" value="si" checked>
-        <label class="form-check-label">Sí</label>
-    </div>
-    <div class="form-check">
-        <input class="form-check-input" type="radio" name="cineco" value="no">
-        <label class="form-check-label">No</label>
-    </div>
+        <div class="row">
 
-    <button type="submit" class="btn btn-primary">Procesar</button>
-    <a href="{{ url_for('cinepolis') }}" class="btn btn-secondary">Salir</a>
+            <div class="col-md-6 p-4" style="border-right: 2px solid #004182;">
+                
+                <div class="mb-3">
+                    {{ macros.campoNuevo(form.nombrec, class="form-control") }}
+                </div>
 
+                <div class="mb-3">
+                    {{ macros.campoNuevo(form.compradores, class="form-control") }}
+                </div>
+
+                <div class="mb-3">
+                    {{ macros.campoNuevo(form.boletas, class="form-control") }}
+                </div>
+
+                <div class="mb-3">
+                    {{ macros.campoNuevo(form.cineco) }}
+                </div>
+
+            </div>
+
+            <div class="col-md-6 p-4" >
+
+                {% if mensaje %}
+                    <h4 style="color:#d9534f;">
+                        {{ mensaje }}
+                    </h4>
+                {% endif %}
+
+                {% if total %}
+                    <h3 style="color:#cfccc4;">
+                        Total a pagar: {{ total }}
+                    </h3>
+                {% endif %}
+
+            </div>
+
+        </div>
+
+        <div class="row mt-4">
+            <div class="col text-center">
+                <button type="submit" class="btn btn-primary me-2">
+                    Procesar
+                </button>
+                <a href="{{ url_for('cinepolis') }}" class="btn btn-secondary">
+                    Salir
+                </a>
+            </div>
+        </div>
+
+    </div>
 </form>
 
-{% if mensaje %}
-<h1>
-    {{ mensaje }}
-</h1>
-{% endif %}
+<style>
+    form label {
+        color: #ffffff;
+    }
+</style>
 
-{% if total %}
-<h1>
-    Total a pagar: {{ total }}
-</h1>
-{% endif %}
 
 {% endblock %}
